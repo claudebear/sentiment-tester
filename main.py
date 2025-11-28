@@ -8,7 +8,7 @@ app = FastAPI()
 class InputText(BaseModel):
     text: str
 
-model_name = "google-bert/bert-base-uncased"
+model_name = "distilbert-base-uncased-finetuned-sst-2-english"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
