@@ -8,14 +8,14 @@ app = FastAPI()
 class InputText(BaseModel):
     text: str
 
-model_name = "squeezebert/squeezebert-uncased-finetuned-sst2"
+model_name = "prajjwal1/bert-tiny"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
 @app.post("/analyze")
 async def predict(input: InputText):
     text = input.text
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=64)
     with torch.no_grad():
         logits = model(**inputs).logits
     probs = torch.softmax(logits, dim=-1)
