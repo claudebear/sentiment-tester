@@ -8,7 +8,7 @@ app = FastAPI()
 class InputText(BaseModel):
     text: str
 
-model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+model_name = "squeezebert/squeezebert-uncased-finetuned-sst2"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
