@@ -1,23 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import pipeline
 
 app = FastAPI()
 
-class InputText(BaseModel):
+# Load ALBERT for text classification
+classifier = pipeline(
+    "text-classification",
+    model="textattack/albert-base-v2-sst2",
+    device=-1   # CPU
+)
+
+class Item(BaseModel):
     text: str
 
-model_name = "distilbert-base-uncased-finetuned-sst-2-english"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
-
-@app.post("/analyze")
-async def predict(input: InputText):
-    text = input.text
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=64)
-    with torch.no_grad():
-        logits = model(**inputs).logits
-    probs = torch.softmax(logits, dim=-1)
-    sentiment = "positive" if probs[0][1] > probs[0][0] else "negative"
-    return {"sentiment": sentiment, "confidence": probs.max().item()}
+@app.post("/predict")
+def predict(item: Item):
+    result = classifier(item.text)[0]
+    return {"label": result["label"], "score": float(result["score"])}
