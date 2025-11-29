@@ -14,7 +14,7 @@ class InputText(BaseModel):
     text: str
 
 # --- Load ALBERT SST-2 model ---
-model_name = "textattack/albert-base-v2-SST-2"   # <-- KEEP THIS EXACT
+model_name = "finiteautomata/bertweet-base-sentiment-analysis"   # <-- KEEP THIS EXACT
 
 # Force slow tokenizer to avoid fast-tokenizer errors
 tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
