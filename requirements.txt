@@ -1,6 +1,6 @@
 fastapi
-torch
+uvicorn
 transformers==4.37.2
-pydantic
-uvicorn[standard]
+sentencepiece
 protobuf
+torch
