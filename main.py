@@ -7,7 +7,7 @@ app = FastAPI()
 # Load ALBERT for text classification
 classifier = pipeline(
     "text-classification",
-    model="textattack/albert-base-v2-sst2",
+    model="textattack/albert-base-v2-SST-2",
     device=-1   # CPU
 )
 
