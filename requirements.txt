@@ -3,3 +3,4 @@ torch
 transformers
 pydantic
 uvicorn[standard]
+protobuf
